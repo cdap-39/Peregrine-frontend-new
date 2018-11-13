@@ -1,0 +1,101 @@
+<body>
+  <div class="container">
+    <div class="row align-self-center">
+      <div class="col-lg-8 col-md-11 mx-auto login-wrapper">
+        <div class="row card card-signin my-5">
+          <div class="row ">
+           <div class="col-md-6 login-left   ">
+           <img src="../../assets/logo.png"  class="img-fluid " alt="">
+             <h1>Peregrine</h1>
+          </div>
+          <div class="col-md-6 login-right card-b order-md-last  ">
+                            <div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 well well-sm">
+          <div *ngIf="!completeSignUp">
+            <h3><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Sign up</h3>
+            <hr>
+            <div  *ngIf="!free" class="container" style="border: #666666 1px solid;border-radius: 5px;">
+            <i class="fa fa-users "></i><p style="color: #2e2e2e" class="alert-success">
+               Try Peregrine Tool Free For <b>30 Days!</b> Cancel at anytime, and learn why Peregrine Tool is the #1 Trusted Journalism Tool.
+            </p>
+            </div>
+            <div *ngIf="!free" ><br>
+              <button style=""  (click)="freeTrail()" class="btn btn-lg btn-success btn-block" type="button">
+                Free Trail</button>
+            </div>
+
+
+            <form *ngIf="free" [formGroup]="signUpForm" (keyup)="reset()" (ngSubmit)="onSubmit()" class="form" role="form">
+            <div class="row">
+                <div class="col-xs-6 col-md-6">
+                    <input class="form-control" formControlName="firstName" name="firstname" placeholder="First Name" type="text"
+                        required autofocus />
+                </div>
+                <div class="col-xs-6 col-md-6">
+                    <input class="form-control" (keyup)="reset()" formControlName="lastName" name="lastname" placeholder="Last Name" type="text" required />
+                </div>
+            </div>
+            <div class="alert-danger"  *ngIf="(signUpForm.get('firstName').hasError('required') && !signUpForm.get('firstName').untouched) || (signUpForm.get('lastName').hasError('required') && !signUpForm.get('lastName').untouched)">
+                      Please enter first name & last name
+            </div>
+            <input class="form-control" (keyup)="reset()" formControlName="username" name="youremail" placeholder="Your Email" type="email" />
+            <div class="alert-danger"  *ngIf="signUpForm.get('username').hasError('required') && !signUpForm.get('username').untouched || signUpForm.get('username').hasError('email')">
+                      Please enter valid email
+            </div>
+            <input class="form-control" (keyup)="reset()" formControlName="password" name="password" placeholder="New Password" type="password" />
+            <div class="alert-danger"  *ngIf="signUpForm.get('password').value.toString().length<7 && signUpForm.get('password').touched">
+                      Your password must be at least 8 characters long.
+            </div>
+            <input class="form-control" (keyup)="reset()" formControlName="re_password" name="reenterpassword" placeholder="Re-enter password" type="password" />
+            <div class="alert-danger"  *ngIf="(signUpForm.get('re_password').value !== signUpForm.get('password').value )&&  !signUpForm.get('re_password').untouched ">
+                      Password does not match
+            </div>
+            <input class="form-control"  (keyup)="reset()" formControlName="age" name="age" placeholder="Age" type="number" />
+            <div class="alert-danger"  *ngIf="signUpForm.get('age').hasError('required') && !signUpForm.get('age').untouched ">
+                      Please enter valid age
+            </div>
+
+            <label class="radio-inline">
+                <input type="radio" name="sex" id="inlineCheckbox1" value="male" />
+                Male
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="sex" id="inlineCheckbox2" value="female" />
+                Female
+            </label>
+            <div class="alert-danger"  *ngIf="failSingUp">
+                     Sign Up fail. try again later
+            </div>
+            <br />
+            <br />
+            <button [disabled]="loading === 'm-progress'" class="btn btn-lg {{loading}} btn-primary btn-block text-uppercase" class="btn btn-lg btn-primary btn-block" type="submit">
+                Sign up</button>
+            </form>
+        </div>
+       </div>
+
+       <div class="container" *ngIf="completeSignUp" >
+
+           <h3><a href="http://www.jquery2dotnet.com"><i class="glyphicon glyphicon-globe"></i></a> Sign up</h3>
+           <hr>
+           <p>
+              You Signed up for 30-Day Free Trial. Enjoy your work !
+           </p>
+          <br>
+          <button (click)="login()" class="btn btn-lg btn-primary btn-block" type="button">
+                Login</button>
+
+       </div>
+
+
+    </div>
+   </div>
+          </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
