@@ -78,18 +78,22 @@ export class ViewComponent implements OnInit {
           this.allArticles.forEach((dataArticle) => {
             console.log(dataArticle);
             console.log(dataArticle.category.category);
+            if(parseFloat(dataArticle.category.pob) > 0.3){
             if (cat === 'rec' && dataArticle.category.category === 'rec.sport.cricket' ) {
                this.catArticles.push(dataArticle);
             }if (cat === 'tec' && dataArticle.category.category === 'talk.tech' ) {
                this.catArticles.push(dataArticle);
             }if (cat === 'pol' && (dataArticle.category.category === 'talk.politics.srilanka' || dataArticle.category.category === 'talks.politics.srilanka') ) {
               this.catArticles.push(dataArticle);
+            }if (cat === 'accident' && dataArticle.category.category === 'soc.accident' ) {
+                 this.catArticles.push(dataArticle);
             }if (cat === 'med' && (dataArticle.category.category === 'talk.medical' || dataArticle.category.category === 'talk.health') ) {
-               this.catArticles.push(dataArticle);
+                 this.catArticles.push(dataArticle);
             } else if (dataArticle.category.category && cat === dataArticle.category.category.toString().split('.')[0]) {
               this.catArticles.push(dataArticle);
             }
             this.catArticles = this.removeDuplicates(this.catArticles, 'heading');
+            }
           });
         }
         this.viewArticles = this.catArticles.reverse();
@@ -194,7 +198,9 @@ export class ViewComponent implements OnInit {
                 }else{
                   this.count++;
                 }
-                 this.headLine = this.catArticles[this.count]['heading'] === undefined ? "waiting": this.catArticles[this.count]['heading'];
+                if(undefined !== this.catArticles[this.count]['heading'] ) {
+                  this.headLine = this.catArticles[this.count]['heading'] === undefined ? "waiting" : this.catArticles[this.count]['heading'];
+                }
               });
   }
   public searchByHeadline(){

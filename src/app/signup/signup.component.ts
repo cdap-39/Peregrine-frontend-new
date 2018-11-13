@@ -43,7 +43,7 @@ export class SignupComponent implements OnInit {
         "payment" : "Free Trail",
         "name" : this.signUpForm.get('firstName').value.toString()+' '+this.signUpForm.get('lastName').value.toString(),
       };
-      this.apiService.post('http://localhost:5000/api/signup', user )
+      this.apiService.post('https://peregrine-backend.herokuapp.com/api/signup', user )
      .subscribe((data) => {
          console.log(data._body);
          this.loading = "";

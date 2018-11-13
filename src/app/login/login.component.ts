@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         password : pw
       };
       console.log(pw);
-     this.apiService.post('http://localhost:5000/api/login', user )
+     this.apiService.post('https://peregrine-backend.herokuapp.com/api/login', user )
      .subscribe((data) => {
          console.log(data._body);
          this.loading = "";

@@ -149,7 +149,7 @@ export class ToolsComponent implements OnInit {
   public save() {
    if (this.count >= 1 && this.name !== '') {
    this.loading = 'm-progress';
-   this.apiService.post('https://obscure-citadel-80764.herokuapp.com/api/save', {'content': this.htmlContent, 'name': this.name})
+   this.apiService.post('https://peregrine-backend.herokuapp.com/api/save', {'content': this.htmlContent, 'name': this.name})
      .subscribe((data) => {
        console.log(data._body);
        // this.templates = JSON.parse(data._body);
@@ -209,7 +209,7 @@ export class ToolsComponent implements OnInit {
 
   public getArticles() {
 
-    this.apiService.get('https://obscure-citadel-80764.herokuapp.com/api/getAllsavedArticles')
+    this.apiService.get('https://peregrine-backend.herokuapp.com/api/getAllsavedArticles')
       .subscribe((data) => {
         // console.log(data._body);
         this.templates = JSON.parse(data._body);
@@ -231,7 +231,7 @@ export class ToolsComponent implements OnInit {
     console.log(this.articleId);
     this.popState = true;
     this.submit = 'm-progress';
-     this.apiService.delete('https://obscure-citadel-80764.herokuapp.com/api/deleteArticles/' +  this.articleId)
+     this.apiService.delete('https://peregrine-backend.herokuapp.com/api/deleteArticles/' +  this.articleId)
       .subscribe((data) => {
         console.log(data._body);
          this.submit = '';
@@ -291,7 +291,7 @@ export class ToolsComponent implements OnInit {
     };
       this.loading = 'm-progress';
        this.message = '';
-     this.apiService.post('https://lit-scrubland-90930.herokuapp.com/api/submit', obj)
+     this.apiService.post('https://peregrine-backend.herokuapp.com/api/submit', obj)
      .subscribe((data) => {
        console.log(data._body);
        // this.templates = JSON.parse(data._body);
@@ -327,7 +327,7 @@ export class ToolsComponent implements OnInit {
      this.checkReview = '';
       this.inbox = [];
        this.allMail = [];
-     this.apiService.get('https://lit-scrubland-90930.herokuapp.com/api/getAllSubmitArticles')
+     this.apiService.get('https://peregrine-backend.herokuapp.com/api/getAllSubmitArticles')
       .subscribe((data) => {
         console.log(data._body);
         this.allMail = JSON.parse(data._body);
@@ -370,7 +370,7 @@ export class ToolsComponent implements OnInit {
     const cUser: any =  this.article.senders.find(el => el.email === 'pasansilva@gmail.com');
     filterOne.push({'name': cUser.name, 'status': this.comment, 'email': cUser.email});
     this.article.senders = filterOne;
-    this.apiService.put('https://lit-scrubland-90930.herokuapp.com/api/review',  this.article)
+    this.apiService.put('https://peregrine-backend.herokuapp.com/api/review',  this.article)
      .subscribe((data) => {
        console.log(data._body);
        // this.templates = JSON.parse(data._body);
