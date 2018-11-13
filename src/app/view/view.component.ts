@@ -73,24 +73,54 @@ export class ViewComponent implements OnInit {
         // JSON.parse(this.allTest);
         this.catArticles = [];
         if (cat === 'talk.home') {
-          this.catArticles = this.allArticles;
+           this.allArticles.forEach((dataArticle) => {
+             if (dataArticle['video-link'] || dataArticle['media-link']) {
+               this.catArticles.push(dataArticle)
+             }
+           });
         } else {
           this.allArticles.forEach((dataArticle) => {
-            console.log(dataArticle);
+            // console.log(dataArticle);
             console.log(dataArticle.category.category);
-            if(parseFloat(dataArticle.category.pob) > 0.3){
+
             if (cat === 'rec' && dataArticle.category.category === 'rec.sport.cricket' ) {
+               console.log('rec');
                this.catArticles.push(dataArticle);
-            }if (cat === 'tec' && dataArticle.category.category === 'talk.tech' ) {
+            }
+            if(parseFloat(dataArticle.category.pob) > 0.1 && (dataArticle['video-link']  || dataArticle['media-link']) ){
+            if (cat === 'tec' && (dataArticle.category.category === 'talk.tech' || dataArticle.category.category === 'sci.space' ||  dataArticle.category.category === 'sci.health'
+                || dataArticle.category.category === 'sci.electronics' || dataArticle.category.category === 'comp.graphics' || dataArticle.category.category === 'sci.crypt')) {
+               console.log('tec');
                this.catArticles.push(dataArticle);
-            }if (cat === 'pol' && (dataArticle.category.category === 'talk.politics.srilanka' || dataArticle.category.category === 'talks.politics.srilanka') ) {
+
+            }else if (cat === 'pol' && (dataArticle.category.category === 'talk.politics.srilanka' || dataArticle.category.category === 'talks.politics.srilanka') ) {
+               console.log('pol');
               this.catArticles.push(dataArticle);
-            }if (cat === 'accident' && dataArticle.category.category === 'soc.accident' ) {
-                 this.catArticles.push(dataArticle);
-            }if (cat === 'med' && (dataArticle.category.category === 'talk.medical' || dataArticle.category.category === 'talk.health') ) {
-                 this.catArticles.push(dataArticle);
-            } else if (dataArticle.category.category && cat === dataArticle.category.category.toString().split('.')[0]) {
+
+            }else if (cat === 'edu' && dataArticle.category.category === 'edu.education' ) {
+               console.log('edu');
+               this.catArticles.push(dataArticle);
+
+            }else if (cat === 'soc' && dataArticle.category.category === 'soc.for') {
+              console.log('soc');
               this.catArticles.push(dataArticle);
+
+            }else if (cat === 'accident' && (dataArticle.category.category === 'soc.accident' ) ) {
+              console.log('accident');
+              this.catArticles.push(dataArticle);
+
+            }else if (cat === 'med' && (dataArticle.category.category === 'talk.medical' || dataArticle.category.category === 'talk.health') ) {
+                  console.log('med');
+                 this.catArticles.push(dataArticle);
+
+            }else if (cat === 'cri' && (dataArticle.category.category === 'cri.crime' || dataArticle.category.category === 'cri.criminal.guns') ) {
+                 console.log('cri');
+                 this.catArticles.push(dataArticle);
+
+            // } else if (dataArticle.category.category && cat === dataArticle.category.category.toString().split('.')[0]) {
+            //   console.log('another');
+            //   this.catArticles.push(dataArticle);
+
             }
             this.catArticles = this.removeDuplicates(this.catArticles, 'heading');
             }
@@ -191,14 +221,14 @@ export class ViewComponent implements OnInit {
   public headLineView(){
               let max = this.catArticles.length;
               this.count = 0 ;
-              Observable.interval(5000).subscribe((val) =>
+              Observable.interval(10000).subscribe((val) =>
               {
               if(this.count > max - 1){
                   this.count = 0
                 }else{
                   this.count++;
                 }
-                if(undefined !== this.catArticles[this.count]['heading'] ) {
+                if( this.catArticles[this.count] && undefined !== this.catArticles[this.count]['heading'] ) {
                   this.headLine = this.catArticles[this.count]['heading'] === undefined ? "waiting" : this.catArticles[this.count]['heading'];
                 }
               });

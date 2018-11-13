@@ -477,7 +477,7 @@
                        <li class="msg row" style="width: 100%;" >
                            <a   style="margin-left: 0px;" class="row col-md-12" href="javascript:0">
                              <div class="col-md-6 pull-left">
-                               <span class="mail-subject"><i class="fa fa-edit"></i>{{ ' '+msges.subject}}</span>
+                               <span class="mail-subject"><i class="fa fa-edit"></i>{{ ' '+msges.subject+' : '+msges.username}}</span>
                                <span class="mail-message-preview includes">{{ getRightContent(msges.content)}}</span>
                                <!--<span class="mail-message-preview">You have ten more subscriptions click her...</span>-->
                                <div >
@@ -503,8 +503,8 @@
        </div>
        <div *ngIf="tab === false" class="container-fluid">
 
-          <ul class="mail-list" *ngFor="let msges of allMail">
-                       <li class="msg row" style="width: 100%;" *ngIf="msges.username === 'pasansilva@gmail.com'">
+          <ul class="mail-list" *ngFor="let msges of sentReview">
+                       <li class="msg row" style="width: 100%;">
                            <a  (click)="use(msges.content)"  style="margin-left: 0px;" class="row col-md-12" href="javascript:0">
                              <div class="col-md-6 pull-left">
                                <span class="mail-subject"><i class="fa fa-edit"></i>{{ ' '+msges.subject}}</span>
@@ -521,7 +521,7 @@
                               </div>
                              </div>
                              <div style="right: 0;" class="col-md-4 pull-right">
-                               <button [ngClass]="{'btn-success': msges.status === 'Accepted' }" class="btn btn-md btn-default pull-right">{{msges.status}}</button>
+                               <button [ngClass]="{'btn-success': msges.status === 'Success' }" class="btn btn-md btn-default pull-right">{{msges.status}}</button>
                                <br>
                                 <br>
                                <p class="pull-right">{{msges.time.toString().split('T')[0]}}</p>

@@ -34,7 +34,7 @@
 						<!--<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false"><p>health</p></a>-->
 						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false" (click)="setCategory('tec')"><p>Technology</p></a>
 						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false" (click)="setCategory('med')"><p>Health</p></a>
-						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false" (click)="setCategory('soc')"><p>Organizations</p></a>
+						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false" (click)="setCategory('soc')"><p>Forecast</p></a>
 						<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-about" role="tab" aria-controls="nav-about" aria-selected="false" (click)="setCategory('accident')"><p>Accidents</p></a>
 					</div>
           </div>
@@ -178,6 +178,6 @@
 
 <div class="news-line" tabindex="-1" role="dialog" style="display: block;bottom: 0px;" [style.display]="true ? 'block' : 'none'">
         <div class="pull-right">
-          <div class="alert alert-success"> <a style="color:#495057;" href="javascript:" (click)="searchByHeadline()"><h6>{{headLine}}</h6>  </a> </div>
+          <div class="alert alert-primary"> <a style="color:darkblue;" href="javascript:" (click)="searchByHeadline()"><h6>{{headLine}}</h6>  </a> </div>
         </div>
 </div>

@@ -52,15 +52,11 @@ export class ToolsComponent implements OnInit {
   private scanResults: any[];
   private articleId: string;
   private similarArticles: any[];
-  private userslist = [ {name : 'Tissa Abeysekera', email: 'TissaAbeysekera@gmail.com' },
-    {name: 'Nihal De Silva', email: 'Nihal@gmail.com' },
-    {name: 'Vijita Fernando', email: 'VijitaFernando@gmail.com' },
-    {name: 'Romesh Gunesekera', email: 'RomeshGunesekera@gmail.com' },
-    {name: 'Shehan Karunatilaka', email: 'ShehanKarunatilaka@gmail.com' },
-    {name: 'Punyakante Wijenaike', email: 'PunyakanteWijenaike@gmail.com' }];
+  private userslist = [];
   private user: string;
   private email: string;
   private allMail: any[] = [];
+  private sentReview: any[] = [];
   private checkReview: string;
   private article: any;
   private inbox: any[] = [];
@@ -70,15 +66,16 @@ export class ToolsComponent implements OnInit {
     if (!window.sessionStorage.getItem('token')) {
        this.router.navigate(['/view']);
     } else {
-         this.username = jwtHelper.decodeToken(window.sessionStorage.getItem('token')).name;
+         this.username = jwtHelper.decodeToken(window.sessionStorage.getItem('token')).username;
          console.log(jwtHelper.decodeToken(window.sessionStorage.getItem('token')))
-        this.payment = jwtHelper.decodeToken(window.sessionStorage.getItem('token')).payment;
+         this.payment = jwtHelper.decodeToken(window.sessionStorage.getItem('token')).payment;
     }
   }
 
   ngOnInit() {
     this.getArticles();
     this.getReviewArticles();
+    this.getUsers();
   }
 
   public wordCount() {
@@ -282,7 +279,7 @@ export class ToolsComponent implements OnInit {
 
     if (this.addedUsers.length > 0 && this.name !== '' && this.htmlContent.split(' ').length > 2   ) {
       const obj = {
-      username: 'pasansilva@gmail.com',
+      username: this.username,
       senders: this.addedUsers,
       time: new Date(),
       content: this.htmlContent,
@@ -307,13 +304,13 @@ export class ToolsComponent implements OnInit {
 
      });
    } else {
-        // this.popState = true;
         this.loading = '';
         this.message = 'Proper articles and fields are mandatory !';
    }
   }
    public check(article) {
-          const userReview = article.senders.find( send => send.email === 'pasansilva@gmail.com');
+         console.log(article);
+          const userReview = article.senders.find( send => send.email === this.username);
           console.log(userReview);
           return userReview.status;
           // if (userReview) {
@@ -321,6 +318,26 @@ export class ToolsComponent implements OnInit {
           // } else {
           //    return userReview.status;
           // }
+   }
+
+   public getUsers(){
+     this.apiService.get('https://peregrine-backend.herokuapp.com/api/users')
+      .subscribe((data) => {
+             console.log('Users :'+data._body)
+              let users = JSON.parse(data._body);
+              users.forEach(user => {
+                if( user.username !== this.username) {
+                  this.userslist.push({
+                    "name": user.name, "email": user.username
+                  })
+                }
+              });
+
+      }, (err) => {
+        console.log(err);
+        setTimeout(() => {
+        }, 3000);
+      });
    }
 
    public getReviewArticles() {
@@ -332,13 +349,16 @@ export class ToolsComponent implements OnInit {
         console.log(data._body);
         this.allMail = JSON.parse(data._body);
         this.allMail.forEach( element5 => {
-          const userReview = element5.senders.find( send => send.email === 'pasansilva@gmail.com');
+          const userReview = element5.senders.find( send => send.email === this.username);
           console.log(userReview);
           if (userReview) {
             this.inbox.push(element5);
-            // this.checkReview = userReview.status;
-            // this.comment = this.checkReview;
           }
+          if (element5.username === this.username) {
+            this.sentReview.push(element5);
+          }
+
+
         });
       }, (err) => {
         console.log(err);
@@ -366,8 +386,8 @@ export class ToolsComponent implements OnInit {
 
    if (this.comment !== '') {
      this.submit = 'm-progress';
-    const filterOne: any[] = this.article.senders.filter(el => el.email !== 'pasansilva@gmail.com');
-    const cUser: any =  this.article.senders.find(el => el.email === 'pasansilva@gmail.com');
+    const filterOne: any[] = this.article.senders.filter(el => el.email !== this.username);
+    const cUser: any =  this.article.senders.find(el => el.email === this.username);
     filterOne.push({'name': cUser.name, 'status': this.comment, 'email': cUser.email});
     this.article.senders = filterOne;
     this.apiService.put('https://peregrine-backend.herokuapp.com/api/review',  this.article)
